@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+<style>
+html, body{
+	background-color: #c2c2c2;
+}
+#mainContainer{
+	width: 100%; padding: 10px; text-align: center; font-family: Arial, sans-serif; font-size: 21px;
+}
+input, button {
+	font-size: 21px;
+	font-weight: bold;
+	padding: 8px;
+}
+.menuopt{
+	width: 100px;
+}
+#xtramenu{
+	display: none;
+}
+</style>
+<script src="buidl.js"></script>
+</head>
+    
+<body>
+<div id="mainContainer">
+<h1 style="color: #c2c2c2;">Xpub Export Addresses</h1>
+	<div id="content" style="position: relative; margin: auto; text-align: center;">
+	<img src="dumping-astronaut.gif" />
+	<br>
+	<input type="text" id="fromXpubp1" size="70" placeholder="Enter your x/y/zpub"><button id="fromXpub" onclick="return fromXpubbtn();">Dump</button><button id="addmenu" onclick="return addmenu();" class="attrib">></button>
+	<div id="xtramenu">
+	Deriv Change Path: <input type="number" id="fromXpubp3" class="menuopt" value="0" style="margin-right:15px;"> # to Dump: <input type="number" class="menuopt" id="fromXpubp2" value="100"> 
+	</div>
+	
+	</div>
+</div>
+
+
+<br>
+<div id="fromXpubout" style="width: 90%; height: 600px; border: 1px solid #121212; overflow: scroll; display: none;"></div> 
+<script>
+let inout = 0;
+var btn = document.querySelector(".attrib");
+
+btn.addEventListener("mouseover", function() {
+	if(inout==0){
+		this.textContent = "View Options";
+	} else {
+		this.textContent = "Hide Options";
+	}
+  
+})
+btn.addEventListener("mouseout", function() {
+  this.textContent = ">";
+})
+
+function addmenu(){
+	if(inout==0){
+		document.getElementById("xtramenu").style.display = "block";
+		inout=1;
+	} else {
+		document.getElementById("xtramenu").style.display = "none";
+		inout=0;
+	}
+	 
+	 
+}
+function fromXpubbtn(){
+    document.getElementById("fromXpubout").style.display = "block";
+    document.getElementById("fromXpubout").innerHTML = "";
+	let p1 = document.getElementById("fromXpubp1").value;
+	let p2 = document.getElementById("fromXpubp2").value;
+	let p3 = document.getElementById("fromXpubp3").value;
+	
+	for(var i=0;i<p2;i++){
+		let address = buidl.fromXpub(p1,p3,i);
+		document.getElementById("fromXpubout").innerHTML += address.addr+'</br>';
+	}
+	
+	
+	
+}
+</script>
+</body>
+</html>
